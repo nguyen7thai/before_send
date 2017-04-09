@@ -1,4 +1,10 @@
 console.log("beginning")
+var PIMPIM_CHECKLIST = [
+  "CC cho sếp",
+  "Xoa pim pim",
+  "Khen anh be đẹp trai"
+]
+
 
 var toggleAllSend = function(isShow) {
   var xpath = "//*[text()='Send']";
@@ -29,7 +35,7 @@ $(document).on('focus', '[contenteditable]', function() {
       $('.pimpim-div').addClass('getout')
     })
 
-    chrome.storage.sync.get("pimpimlist", function(data){
+    chrome.storage.sync.get({"pimpimlist": PIMPIM_CHECKLIST}, function(data){
       $.each(data.pimpimlist, function(index, content){
         var row = $('<span/>')
         row.addClass('check-row')
