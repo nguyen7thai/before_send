@@ -1,0 +1,23 @@
+{
+  "manifest_version": 2,
+
+  "name": "Getting started example",
+  "description": "This is a tool to remind pimpim before sending email",
+  "version": "1.0",
+
+  "browser_action": {
+    "default_icon": "icon.png",
+    "default_popup": "pimpim.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://mail.google.com/*"],
+      "js": ["jquery.js", "pimpim.js"],
+      "css": ["css.css"]
+    }
+  ],
+  "permissions": [
+    "activeTab",
+    "tabs", "https://mail.google.com/*"
+  ]
+}

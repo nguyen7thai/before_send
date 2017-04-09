@@ -1,0 +1,33 @@
+.pimpim-div {
+  position: fixed;
+  min-width: 300px;
+  border: 3px solid #404040;
+  border-radius: 5px;
+  color: #fff;
+  left: 0;
+  bottom: 0;
+  padding: 20px;
+  background: #404040;
+}
+.check-row {
+  display: block;
+  padding-left: 10px;
+  margin-top: 5px
+}
+.check-text {
+  color: #fff;
+  margin-left: 5px;
+}
+.title {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 18px
+}
+.xoa-image {
+  width: 50px;
+  height: 50px;
+  margin-top: 20px;
+}
+.hidden {
+  visibility: hidden;
+}
