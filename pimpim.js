@@ -1,8 +1,4 @@
 console.log("beginning")
-var PIMPIM_CHECKLIST = [
-  "CC cho sếp",
-  "Khen anh be đẹp trai"
-]
 
 var toggleAllSend = function(isShow) {
   var xpath = "//*[text()='Send']";
@@ -16,7 +12,9 @@ var toggleAllSend = function(isShow) {
 $(document).on('focus', '[contenteditable]', function() {
   console.log("editting");
   toggleAllSend(false)
+  $('.pimpim-check').prop('checked',false);
   if(window.pimpimPopup) {
+    $('.pimpim-div').removeClass('getout')
     //    window.pimpimPopup
   } else {
     var checkDiv = $('<div/>')
@@ -25,38 +23,46 @@ $(document).on('focus', '[contenteditable]', function() {
     title.addClass('title')
     title.text("Pim mặp Ú Ù U")
     checkDiv.append(title)
-
-    $.each(PIMPIM_CHECKLIST, function(index, content){
-      var row = $('<span/>')
-      row.addClass('check-row')
-      var checkBox = $('<input type="checkbox" />')
-      checkBox.addClass('pimpim-check')
-      var text = $('<span/>')
-      text.addClass('check-text')
-      text.text(content)
-      row.append(checkBox) 
-      row.append(text)
-      checkDiv.append(row)
-
+    var closeBtn = $('<span class="close">Close</span>')
+    title.append(closeBtn)
+    closeBtn.on('click', function() {
+      $('.pimpim-div').addClass('getout')
     })
-    var image = $('<img src="https://api.zaloapp.com/api/emoticon/sticker/webpc?eid=1002&size=130" />')
-    image.addClass('xoa-image')
-    image.addClass('hidden')
 
-    checkDiv.append(image)
+    chrome.storage.sync.get("pimpimlist", function(data){
+      $.each(data.pimpimlist, function(index, content){
+        var row = $('<span/>')
+        row.addClass('check-row')
+        var checkBox = $('<input type="checkbox" />')
+        checkBox.addClass('pimpim-check')
+        var text = $('<span/>')
+        text.addClass('check-text')
+        text.text(content)
+        row.append(checkBox) 
+        row.append(text)
+        checkDiv.append(row)
 
+      })
+      var imageContainer = $('<div class="image-container" />')
+      var image = $('<img src="https://api.zaloapp.com/api/emoticon/sticker/webpc?eid=1002&size=130" />')
+      image.addClass('xoa-image')
+      imageContainer.append(image)
+      imageContainer.append('Ngoan dữ')
+      imageContainer.addClass('hidden')
 
-    $('body').append(checkDiv)
-    window.pimpimPopup = checkDiv;
+      checkDiv.append(imageContainer)
+      $('body').append(checkDiv)
+      window.pimpimPopup = checkDiv;
 
-    $('.pimpim-check').on('change', function() {
-      var isShow = $('.pimpim-check:not(:checked)').length == 0
-      toggleAllSend(isShow)
-      if(isShow) {
-        $('.xoa-image').removeClass('hidden') 
+      $('.pimpim-check').on('change', function() {
+        var isShow = $('.pimpim-check:not(:checked)').length == 0
+        toggleAllSend(isShow)
+        if(isShow) {
+          $('.image-container').removeClass('hidden') 
 
-      } else {
-        $('.xoa-image').addClass('hidden')}
+        } else {
+          $('.image-container').addClass('hidden')}
+      })
     })
   }
 
